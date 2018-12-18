@@ -1,0 +1,82 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Pickable
+  - Pickable_Fruit_Strawberry
+  - Pickable_Fruit_Grapes
+  - Pickable_Fruit_Banana
+  - Pickable_Fruit_Orange
+  - ItemHolder
+  - Trash
+  - Pickable_Alcohol_Type1
+  - Pickable_Alcohol_Type2
+  - Pickable_Alcohol_Type3
+  - Pickable_Alcohol_Type4
+  - Pickable_Glass_Type1
+  - Pickable_Glass_Type2
+  - Pickable_Glass_Type3
+  - Pickable_Glass_Type4
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Bar
+    uniqueID: 1684772125
+    locked: 0
+  - name: BetweenBarAndPlayer
+    uniqueID: 2355687461
+    locked: 0
+  - name: PlayerLayer1
+    uniqueID: 2779030887
+    locked: 0
+  - name: PlayerLayer2
+    uniqueID: 476767765
+    locked: 0
+  - name: PlayerLayer3
+    uniqueID: 334013505
+    locked: 0
+  - name: PlayerLayer4
+    uniqueID: 3800665601
+    locked: 0
+  - name: BetweenPlayerAndTrashcan
+    uniqueID: 780941731
+    locked: 0
+  - name: Trashcan
+    uniqueID: 1320306983
+    locked: 0
