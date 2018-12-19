@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 
 public class GameManager : MonoBehaviour
 {
@@ -20,9 +22,23 @@ public class GameManager : MonoBehaviour
     public Sprite m_BluePlayerRight;
     public Sprite m_BluePlayerLeft;
 
+    public Sprite m_PinkPlayerFront;
+    public Sprite m_PinkPlayerBack;
+    public Sprite m_PinkPlayerRight;
+    public Sprite m_PinkPlayerLeft;
+
+    public Sprite m_GreenPlayerFront;
+    public Sprite m_GreenPlayerBack;
+    public Sprite m_GreenPlayerRight;
+    public Sprite m_GreenPlayerLeft;
+
     public float m_moodDecreaseAmount;
 
     public ClientManager m_clientManager;
+
+    public Sprite m_win;
+    public Sprite m_loose;
+    public SpriteRenderer m_backgroundRenderer;
 
     private List<GameObject> m_players;
 
@@ -72,10 +88,9 @@ public class GameManager : MonoBehaviour
 
 
 
-        // TODO REMOVE
         SpawnPlayer(0, 1);
-        SpawnPlayer(1, 25);
-        SpawnPlayer(2, 26);
+        SpawnPlayer(1, 2);
+        SpawnPlayer(2, 3);
         SpawnPlayer(3, 4);
 
 
@@ -152,18 +167,38 @@ public class GameManager : MonoBehaviour
                 || loose)
             {
                 m_gameOver = true;
+
+                for (int i = 0; i < m_players.Count; ++i)
+                {
+                    Destroy(m_players[i]);
+                }
+
+                m_clientManager.DestroyEveryClient();
+
                 if (loose)
                 {
-                    source.PlayOneShot(audioWin);
-                    // loose
+                    m_backgroundRenderer.sprite = m_loose;
+                    source.PlayOneShot(audioLoose);
                 }
                 else
                 {
-                    source.PlayOneShot(audioLoose);
-                    // win
+                    m_backgroundRenderer.sprite = m_win;
+                    source.PlayOneShot(audioWin);
                 }
             }
         }
+        else
+        {
+            if (Input.GetButtonDown("Valid2"))
+            {
+                SceneManager.LoadScene(0);
+            }
+        }
+    }
+
+    public bool IsGameOver()
+    {
+        return m_gameOver;
     }
 
     public void SpawnPlayer(int _spawningLocationIndex, int _joystickIndex)
@@ -183,11 +218,11 @@ public class GameManager : MonoBehaviour
                 break;
 
             case 2:
-                newPlayer.GetComponent<PlayerManager>().SetSprites(m_YellowPlayerFront, m_YellowPlayerBack, m_YellowPlayerLeft, m_YellowPlayerRight);
+                newPlayer.GetComponent<PlayerManager>().SetSprites(m_PinkPlayerFront, m_PinkPlayerBack, m_PinkPlayerLeft, m_PinkPlayerRight);
                 break;
 
             case 3:
-                newPlayer.GetComponent<PlayerManager>().SetSprites(m_YellowPlayerFront, m_YellowPlayerBack, m_YellowPlayerLeft, m_YellowPlayerRight);
+                newPlayer.GetComponent<PlayerManager>().SetSprites(m_GreenPlayerFront, m_GreenPlayerBack, m_GreenPlayerLeft, m_GreenPlayerRight);
                 break;
         }
         m_players.Add(newPlayer);

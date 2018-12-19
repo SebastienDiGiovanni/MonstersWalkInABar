@@ -493,7 +493,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -300}
+  m_AnchoredPosition: {x: 0, y: -150}
   m_SizeDelta: {x: 700, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1925222643
@@ -508,6 +508,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ffacd5e6f5851d42be84c53831fe358, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_sceneToLoad: 2
+  m_delay: 0.5
 --- !u!114 &1925222644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -541,7 +543,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Start the game pressing A
+  m_Text: Start the game pressing Space
 --- !u!222 &1925222645
 CanvasRenderer:
   m_ObjectHideFlags: 0

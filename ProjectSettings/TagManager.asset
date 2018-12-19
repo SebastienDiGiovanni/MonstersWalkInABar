@@ -69,14 +69,14 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Bar
+    uniqueID: 1684772125
+    locked: 0
   - name: ClientBubble
     uniqueID: 2055833431
     locked: 0
   - name: ClientBubbleContent
     uniqueID: 2696327065
-    locked: 0
-  - name: Bar
-    uniqueID: 1684772125
     locked: 0
   - name: BetweenBarAndPlayer
     uniqueID: 2355687461
