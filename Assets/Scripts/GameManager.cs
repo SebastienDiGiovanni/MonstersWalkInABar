@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 
 public class GameManager : MonoBehaviour
 {
@@ -23,6 +25,10 @@ public class GameManager : MonoBehaviour
     public float m_moodDecreaseAmount;
 
     public ClientManager m_clientManager;
+
+    public Sprite m_win;
+    public Sprite m_loose;
+    public SpriteRenderer m_backgroundRenderer;
 
     private List<GameObject> m_players;
 
@@ -146,16 +152,36 @@ public class GameManager : MonoBehaviour
                 || loose)
             {
                 m_gameOver = true;
+
+                for (int i = 0; i < m_players.Count; ++i)
+                {
+                    Destroy(m_players[i]);
+                }
+
+                m_clientManager.DestroyEveryClient();
+
                 if (loose)
                 {
-                    // loose
+                    m_backgroundRenderer.sprite = m_loose;
                 }
                 else
                 {
-                    // win
+                    m_backgroundRenderer.sprite = m_win;
                 }
             }
         }
+        else
+        {
+            if (Input.GetButtonDown("Valid2"))
+            {
+                SceneManager.LoadScene(0);
+            }
+        }
+    }
+
+    public bool IsGameOver()
+    {
+        return m_gameOver;
     }
 
     public void SpawnPlayer(int _spawningLocationIndex, int _joystickIndex)

@@ -1260,7 +1260,7 @@ PrefabInstance:
     - target: {fileID: 567797666477001259, guid: cf09ae971439a6547b194d20945828ed,
         type: 3}
       propertyPath: m_maxTime
-      value: 180
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 567797666477001259, guid: cf09ae971439a6547b194d20945828ed,
         type: 3}
@@ -1277,6 +1277,23 @@ PrefabInstance:
       propertyPath: m_clientManager
       value: 
       objectReference: {fileID: 293217292}
+    - target: {fileID: 567797666477001259, guid: cf09ae971439a6547b194d20945828ed,
+        type: 3}
+      propertyPath: m_loose
+      value: 
+      objectReference: {fileID: 21300000, guid: e7d16c819f258b346841d1819d840051,
+        type: 3}
+    - target: {fileID: 567797666477001259, guid: cf09ae971439a6547b194d20945828ed,
+        type: 3}
+      propertyPath: m_win
+      value: 
+      objectReference: {fileID: 21300000, guid: 2cc4e685e793dfb41a0255c69713b663,
+        type: 3}
+    - target: {fileID: 567797666477001259, guid: cf09ae971439a6547b194d20945828ed,
+        type: 3}
+      propertyPath: m_backgroundRenderer
+      value: 
+      objectReference: {fileID: 944292691}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cf09ae971439a6547b194d20945828ed, type: 3}
 --- !u!114 &4132137678643342122 stripped

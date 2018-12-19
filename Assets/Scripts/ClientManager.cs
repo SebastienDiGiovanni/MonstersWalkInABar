@@ -80,92 +80,95 @@ public class ClientManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Time.time > m_spawningTime)
+        if (!m_gameManager.IsGameOver())
         {
-            m_spawningTime = Time.time + m_spawningDelay;
-
-            if (m_freeSpawningLocations.Count > 0)
+            if (Time.time > m_spawningTime)
             {
-                int randomIndex = Random.Range(0, m_freeSpawningLocations.Count);
-                int clientIndex = m_freeSpawningLocations[randomIndex];
+                m_spawningTime = Time.time + m_spawningDelay;
 
-                // random cocktail
-                Cocktail.Glass glass = (Cocktail.Glass)Random.Range((int)Cocktail.Glass.GLASS_TYPE_1, (int)Cocktail.Glass.GLASS_COUNT);
-                Cocktail.Alcohol alcohol = (Cocktail.Alcohol)Random.Range((int)Cocktail.Alcohol.ALCOHOL_TYPE_1, (int)Cocktail.Alcohol.ALCOHOL_COUNT);
-                Cocktail.Fruit fruit = (Cocktail.Fruit)Random.Range((int)Cocktail.Fruit.FRUIT_TYPE_1, (int)Cocktail.Fruit.FRUIT_COUNT);
+                if (m_freeSpawningLocations.Count > 0)
+                {
+                    int randomIndex = Random.Range(0, m_freeSpawningLocations.Count);
+                    int clientIndex = m_freeSpawningLocations[randomIndex];
 
-                Cocktail cocktail = new Cocktail(glass, alcohol, fruit);
+                    // random cocktail
+                    Cocktail.Glass glass = (Cocktail.Glass)Random.Range((int)Cocktail.Glass.GLASS_TYPE_1, (int)Cocktail.Glass.GLASS_COUNT);
+                    Cocktail.Alcohol alcohol = (Cocktail.Alcohol)Random.Range((int)Cocktail.Alcohol.ALCOHOL_TYPE_1, (int)Cocktail.Alcohol.ALCOHOL_COUNT);
+                    Cocktail.Fruit fruit = (Cocktail.Fruit)Random.Range((int)Cocktail.Fruit.FRUIT_TYPE_1, (int)Cocktail.Fruit.FRUIT_COUNT);
 
-                m_freeSpawningLocations.RemoveAt(randomIndex);
+                    Cocktail cocktail = new Cocktail(glass, alcohol, fruit);
 
-                GameObject newClientGameObject = Instantiate(m_clientPrefab);
-                newClientGameObject.transform.SetParent(transform.GetChild(clientIndex).transform);
-                newClientGameObject.transform.localPosition = new Vector3(0.0F, 0.0F, 0.0F);
+                    m_freeSpawningLocations.RemoveAt(randomIndex);
 
-                // client sprite
-                int randomSprite = Random.Range(0, m_clientsSprites.Count);
-                newClientGameObject.GetComponent<SpriteRenderer>().sprite = m_clientsSprites[randomSprite];
+                    GameObject newClientGameObject = Instantiate(m_clientPrefab);
+                    newClientGameObject.transform.SetParent(transform.GetChild(clientIndex).transform);
+                    newClientGameObject.transform.localPosition = new Vector3(0.0F, 0.0F, 0.0F);
 
-                // glass sprite
-                GameObject glassGameobject = newClientGameObject.transform.GetChild(0).GetChild(0).gameObject;
-                if (glass == Cocktail.Glass.GLASS_TYPE_1)
-                {
-                    glassGameobject.GetComponent<SpriteRenderer>().sprite = m_glassSprites[0];
-                }
-                else if (glass == Cocktail.Glass.GLASS_TYPE_2)
-                {
-                    glassGameobject.GetComponent<SpriteRenderer>().sprite = m_glassSprites[1];
-                }
-                else if (glass == Cocktail.Glass.GLASS_TYPE_3)
-                {
-                    glassGameobject.GetComponent<SpriteRenderer>().sprite = m_glassSprites[2];
-                }
-                else if (glass == Cocktail.Glass.GLASS_TYPE_4)
-                {
-                    glassGameobject.GetComponent<SpriteRenderer>().sprite = m_glassSprites[3];
-                }
+                    // client sprite
+                    int randomSprite = Random.Range(0, m_clientsSprites.Count);
+                    newClientGameObject.GetComponent<SpriteRenderer>().sprite = m_clientsSprites[randomSprite];
 
-                // alcohol sprite
-                GameObject alcoholGameobject = newClientGameObject.transform.GetChild(0).GetChild(2).gameObject;
-                if (alcohol == Cocktail.Alcohol.ALCOHOL_TYPE_1)
-                {
-                    alcoholGameobject.GetComponent<SpriteRenderer>().sprite = m_alcoholSprites[0];
-                }
-                else if (alcohol == Cocktail.Alcohol.ALCOHOL_TYPE_2)
-                {
-                    alcoholGameobject.GetComponent<SpriteRenderer>().sprite = m_alcoholSprites[1];
-                }
-                else if (alcohol == Cocktail.Alcohol.ALCOHOL_TYPE_3)
-                {
-                    alcoholGameobject.GetComponent<SpriteRenderer>().sprite = m_alcoholSprites[2];
-                }
-                else if (alcohol == Cocktail.Alcohol.ALCOHOL_TYPE_4)
-                {
-                    alcoholGameobject.GetComponent<SpriteRenderer>().sprite = m_alcoholSprites[3];
-                }
+                    // glass sprite
+                    GameObject glassGameobject = newClientGameObject.transform.GetChild(0).GetChild(0).gameObject;
+                    if (glass == Cocktail.Glass.GLASS_TYPE_1)
+                    {
+                        glassGameobject.GetComponent<SpriteRenderer>().sprite = m_glassSprites[0];
+                    }
+                    else if (glass == Cocktail.Glass.GLASS_TYPE_2)
+                    {
+                        glassGameobject.GetComponent<SpriteRenderer>().sprite = m_glassSprites[1];
+                    }
+                    else if (glass == Cocktail.Glass.GLASS_TYPE_3)
+                    {
+                        glassGameobject.GetComponent<SpriteRenderer>().sprite = m_glassSprites[2];
+                    }
+                    else if (glass == Cocktail.Glass.GLASS_TYPE_4)
+                    {
+                        glassGameobject.GetComponent<SpriteRenderer>().sprite = m_glassSprites[3];
+                    }
 
-                // fruit sprite
-                GameObject fruitGameobject = newClientGameObject.transform.GetChild(0).GetChild(1).gameObject;
-                if (fruit == Cocktail.Fruit.FRUIT_TYPE_1)
-                {
-                    fruitGameobject.GetComponent<SpriteRenderer>().sprite = m_fruitSprites[0];
-                }
-                else if (fruit == Cocktail.Fruit.FRUIT_TYPE_2)
-                {
-                    fruitGameobject.GetComponent<SpriteRenderer>().sprite = m_fruitSprites[1];
-                }
-                else if (fruit == Cocktail.Fruit.FRUIT_TYPE_3)
-                {
-                    fruitGameobject.GetComponent<SpriteRenderer>().sprite = m_fruitSprites[2];
-                }
-                else if (fruit == Cocktail.Fruit.FRUIT_TYPE_4)
-                {
-                    fruitGameobject.GetComponent<SpriteRenderer>().sprite = m_fruitSprites[3];
-                }
+                    // alcohol sprite
+                    GameObject alcoholGameobject = newClientGameObject.transform.GetChild(0).GetChild(2).gameObject;
+                    if (alcohol == Cocktail.Alcohol.ALCOHOL_TYPE_1)
+                    {
+                        alcoholGameobject.GetComponent<SpriteRenderer>().sprite = m_alcoholSprites[0];
+                    }
+                    else if (alcohol == Cocktail.Alcohol.ALCOHOL_TYPE_2)
+                    {
+                        alcoholGameobject.GetComponent<SpriteRenderer>().sprite = m_alcoholSprites[1];
+                    }
+                    else if (alcohol == Cocktail.Alcohol.ALCOHOL_TYPE_3)
+                    {
+                        alcoholGameobject.GetComponent<SpriteRenderer>().sprite = m_alcoholSprites[2];
+                    }
+                    else if (alcohol == Cocktail.Alcohol.ALCOHOL_TYPE_4)
+                    {
+                        alcoholGameobject.GetComponent<SpriteRenderer>().sprite = m_alcoholSprites[3];
+                    }
 
-                Client clientScript = newClientGameObject.GetComponent<Client>();
-                clientScript.Init(clientIndex, cocktail, this, m_mood);
-                m_clients.Add(clientScript);
+                    // fruit sprite
+                    GameObject fruitGameobject = newClientGameObject.transform.GetChild(0).GetChild(1).gameObject;
+                    if (fruit == Cocktail.Fruit.FRUIT_TYPE_1)
+                    {
+                        fruitGameobject.GetComponent<SpriteRenderer>().sprite = m_fruitSprites[0];
+                    }
+                    else if (fruit == Cocktail.Fruit.FRUIT_TYPE_2)
+                    {
+                        fruitGameobject.GetComponent<SpriteRenderer>().sprite = m_fruitSprites[1];
+                    }
+                    else if (fruit == Cocktail.Fruit.FRUIT_TYPE_3)
+                    {
+                        fruitGameobject.GetComponent<SpriteRenderer>().sprite = m_fruitSprites[2];
+                    }
+                    else if (fruit == Cocktail.Fruit.FRUIT_TYPE_4)
+                    {
+                        fruitGameobject.GetComponent<SpriteRenderer>().sprite = m_fruitSprites[3];
+                    }
+
+                    Client clientScript = newClientGameObject.GetComponent<Client>();
+                    clientScript.Init(clientIndex, cocktail, this, m_mood);
+                    m_clients.Add(clientScript);
+                }
             }
         }
     }
@@ -188,5 +191,21 @@ public class ClientManager : MonoBehaviour
         {
             m_spawningTime += m_spawningDelay;
         }
+    }
+
+    public void DestroyEveryClient()
+    {
+        m_freeSpawningLocations.Clear();
+
+        for (int i = 0; i < m_clientsCount; ++i)
+        {
+            m_freeSpawningLocations.Add(i);
+        }
+
+        for (int i = 0; i < m_clients.Count; ++i)
+        {
+            Destroy(m_clients[i].gameObject);
+        }
+        m_clients.Clear();
     }
 }
