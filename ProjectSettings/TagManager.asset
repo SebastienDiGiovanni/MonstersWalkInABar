@@ -93,6 +93,9 @@ TagManager:
   - name: PlayerLayer4
     uniqueID: 3800665601
     locked: 0
+  - name: PlayerBubble
+    uniqueID: 907350153
+    locked: 0
   - name: BetweenPlayerAndTrashcan
     uniqueID: 780941731
     locked: 0

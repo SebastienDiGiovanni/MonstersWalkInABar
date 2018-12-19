@@ -126,6 +126,8 @@ public class PlayerManager : MonoBehaviour
                         g.addFruit(f);
                     }
 
+                    transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().enabled = false;
+
                     m_currentObjectCarried = null;
 
                     source.PlayOneShot(audioGlass);
@@ -137,6 +139,8 @@ public class PlayerManager : MonoBehaviour
                 m_currentObjectCarried = null;
 
                 source.PlayOneShot(audioTrash);
+
+                transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().enabled = false;
             }
             else if (m_client && m_currentObjectCarried)
             {
@@ -195,8 +199,10 @@ public class PlayerManager : MonoBehaviour
         // disable the collider on the picked object and move it over the head.
         m_currentObjectCarried.GetComponent<BoxCollider2D>().enabled = false;
 
-        m_currentObjectCarried.transform.SetParent(gameObject.transform);
-        m_currentObjectCarried.transform.localPosition = new Vector3(0, 2, 0);
+        gameObject.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().enabled = true; ;
+
+        m_currentObjectCarried.transform.SetParent(gameObject.transform.GetChild(0));
+        m_currentObjectCarried.transform.localPosition = new Vector3(0, 0, 0);
         m_currentObjectCarried.GetComponent<SpriteRenderer>().sortingLayerName = "BetweenPlayerAndTrashcan";
 
         // glass content sorting layer
@@ -212,12 +218,12 @@ public class PlayerManager : MonoBehaviour
         Fruit f = m_currentObjectCarried.GetComponent<Fruit>();
         if (f)
         {
-            m_currentObjectCarried.transform.localScale = new Vector3(1.2F, 1.2F, 1.0F);
+            m_currentObjectCarried.transform.localScale = new Vector3(0.7F, 0.7F, 1.0F);
         }
 
         if (g)
         {
-            m_currentObjectCarried.transform.localScale = new Vector3(.8F, .8F, 1.0F);
+            m_currentObjectCarried.transform.localScale = new Vector3(.4F, .4F, 1.0F);
         }
 
         source.PlayOneShot(audioGrab);
@@ -241,6 +247,8 @@ public class PlayerManager : MonoBehaviour
         m_client = null;
 
         source.PlayOneShot(audioClientHappy);
+
+        transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().enabled = false;
     }
 
     public void ClientNotHappy()
@@ -255,6 +263,8 @@ public class PlayerManager : MonoBehaviour
         m_client = null;
 
         source.PlayOneShot(audioClientAngry);
+
+        transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().enabled = false;
     }
 
     void OnTriggerEnter2D(Collider2D other)
