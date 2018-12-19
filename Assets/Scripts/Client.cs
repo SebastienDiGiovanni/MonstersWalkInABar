@@ -20,52 +20,8 @@ public class Client : MonoBehaviour
         m_mood = _mood;
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
+    public Cocktail GetWantedCocktail()
     {
-        if (collision.gameObject.tag == "Player")
-        {
-            GameObject playerGameObject = GameObject.FindGameObjectWithTag("Player");
-            PlayerManager playerScript = playerGameObject.GetComponent<PlayerManager>();
-            GameObject objectCarried = playerScript.getCurrentObjectCarried();
-
-            if (objectCarried != null)
-            {
-                // player is bringing something to the client
-                if (objectCarried.tag.Contains("Glass"))
-                {
-                    // a glass
-                    Glass glass = objectCarried.GetComponent<Glass>();
-                    if (glass)
-                    {
-                        if (glass.m_glass == m_cocktail.m_glass
-                            && glass.m_fruit == m_cocktail.m_fruit
-                            && glass.m_alcohol == m_cocktail.m_alcohol)
-                        {
-                            // right command
-                            ClientHappy();
-                        }
-                        else
-                        {
-                            ClientNotHappy();
-                        }
-                    }
-                }
-                else
-                {
-                    // not a glass
-                    ClientNotHappy();
-                }
-            }
-        }
-    }
-
-    public void ClientHappy()
-    {
-        m_clientManager.m_gameManager.GetComponent<GameManager>().IncreaseMood(0.1F);
-    }
-
-    public void ClientNotHappy()
-    {
-        m_clientManager.m_gameManager.GetComponent<GameManager>().DecreaseMood(0.1F);
+        return m_cocktail;
     }
 }

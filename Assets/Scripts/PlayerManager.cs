@@ -22,6 +22,13 @@ public class PlayerManager : MonoBehaviour
 
     private int m_playerIndex;
 
+    private GameObject m_client;
+
+    public GameManager m_gameManager;
+
+    private bool m_needToClearBubbleFeedback;
+    private float m_bubbleFeedbackStopTimer;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +40,8 @@ public class PlayerManager : MonoBehaviour
             m_spriteRenderer = GetComponent<SpriteRenderer>();
         }
         m_currentObjectCarried = null;
+
+        m_needToClearBubbleFeedback = false;
     }
 
     // Update is called once per frame
@@ -80,7 +89,7 @@ public class PlayerManager : MonoBehaviour
 
         m_pickupTimer += Time.deltaTime;
 
-        Debug.Log("m_currentlyCollidingWith: " + (m_currentlyCollidingWith ? m_currentlyCollidingWith.gameObject.name : "null"));
+        bool pickupSomething = false;
 
         if (Input.GetButton("Valid" + playerIndex) && m_currentlyCollidingWith && (m_pickupTimer > m_pickupCooldownSeconds))
         {
@@ -113,6 +122,7 @@ public class PlayerManager : MonoBehaviour
                 m_currentObjectCarried.GetComponent<SpriteRenderer>().sortingLayerName = "BetweenBarAndTrashcan";
 
                 m_pickupTimer = 0.0f;
+                pickupSomething = true;
             }
             else
             {
@@ -134,12 +144,14 @@ public class PlayerManager : MonoBehaviour
                         Alcohol a = m_currentObjectCarried.GetComponent<Alcohol>();
                         if (a)
                         {
+                            Debug.Log("DROPPING ALCOHOL : " + a.m_alcohol);
                             m_currentObjectCarried.transform.localPosition = new Vector3(0, 0.5f, 0);
                             g.addAlcohol(a);
                         }
                         Fruit f = m_currentObjectCarried.GetComponent<Fruit>();
                         if (f)
                         {
+                            Debug.Log("DROPPING FRUIT : " + f.m_fruit);
                             m_currentObjectCarried.transform.localPosition = Vector3.zero;
                             g.addFruit(f);
                         }
@@ -147,15 +159,6 @@ public class PlayerManager : MonoBehaviour
                         m_currentObjectCarried = null;
                         m_pickupTimer = 0.0f;
                     }
-                }
-
-                if (m_currentObjectCarried.tag.Contains("Glass"))
-                {
-                    // TODO:
-                        // Check if we're colliding with the Client
-                        // Then drop the glass on the 
-                        // The client will automatically evaluate the drink
-                        // Maybe launch the evaluation from here
                 }
 
                 if (m_currentlyCollidingWith && m_currentlyCollidingWith.gameObject.tag.Contains("Trash"))
@@ -167,8 +170,74 @@ public class PlayerManager : MonoBehaviour
                 }
             }
         }
+
+        // give things to client
+        if (Input.GetButtonDown("Valid" + playerIndex) && m_client && m_currentObjectCarried && !pickupSomething)
+        {
+            if (m_currentObjectCarried.tag.Contains("Glass"))
+            {
+                // a glass
+                Glass glass = m_currentObjectCarried.GetComponent<Glass>();
+                if (glass)
+                {
+                    Client client = m_client.GetComponent<Client>();
+                    Cocktail wantedCocktail = client.GetWantedCocktail();
+
+                    Debug.Log(glass.m_glass + " : " + wantedCocktail.m_glass);
+                    Debug.Log(glass.m_fruit + " : " + wantedCocktail.m_fruit);
+                    Debug.Log(glass.m_alcohol + " : " + wantedCocktail.m_alcohol);
+
+                    if (glass.m_glass == wantedCocktail.m_glass
+                        && glass.m_fruit == wantedCocktail.m_fruit
+                        && glass.m_alcohol == wantedCocktail.m_alcohol)
+                    {
+                        // right command
+                        ClientHappy();
+                    }
+                    else
+                    {
+                        ClientNotHappy();
+                    }
+                }
+            }
+            else
+            {
+                // not a glass
+                ClientNotHappy();
+            }
+        }
+
+        if (m_needToClearBubbleFeedback && Time.time > m_bubbleFeedbackStopTimer)
+        {
+            m_client.transform.GetChild(0).GetChild(3).GetComponent<SpriteRenderer>().enabled = false;
+            m_client.transform.GetChild(0).GetChild(4).GetComponent<SpriteRenderer>().enabled = false;
+            m_needToClearBubbleFeedback = false;
+        }
     }
- 
+
+    public void SetGameManager(GameManager _gameManager)
+    {
+        m_gameManager = _gameManager;
+    }
+
+    public void ClientHappy()
+    {
+        m_gameManager.IncreaseMood(0.1F);
+        m_client.transform.GetChild(0).GetChild(3).GetComponent<SpriteRenderer>().enabled = true;
+        m_needToClearBubbleFeedback = true;
+        m_bubbleFeedbackStopTimer = Time.time + 1.0F;
+        Debug.Log("Client happy");
+    }
+
+    public void ClientNotHappy()
+    {
+        m_gameManager.DecreaseMood(0.1F);
+        m_client.transform.GetChild(0).GetChild(4).GetComponent<SpriteRenderer>().enabled = true;
+        m_needToClearBubbleFeedback = true;
+        m_bubbleFeedbackStopTimer = Time.time + 1.0F;
+        Debug.Log("Client not happy");
+    }
+
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag.Contains("Pickable") && !m_currentlyCollidingWith)
@@ -191,6 +260,11 @@ public class PlayerManager : MonoBehaviour
             {
                 f.setSelected(true);
             }
+        }
+        else if (other.tag.Contains("Client") && !m_client)
+        {
+            Debug.Log("New client !");
+            m_client = other.gameObject;
         }
     }
 
@@ -217,6 +291,10 @@ public class PlayerManager : MonoBehaviour
                 f.setSelected(true);
             }
         }
+        else if (other.tag.Contains("Client") && !m_client)
+        {
+            m_client = other.gameObject;
+        }
     }
 
     void OnTriggerExit2D(Collider2D other)
@@ -241,6 +319,12 @@ public class PlayerManager : MonoBehaviour
         {
             //Debug.Log("collided with " + other.tag + " " + other.gameObject.name);
             m_currentlyCollidingWith = null;
+        }
+
+        if (other.tag.Contains("Client") && m_client)
+        {
+            Debug.Log("Remove client !");
+            m_client = null;
         }
     }
 

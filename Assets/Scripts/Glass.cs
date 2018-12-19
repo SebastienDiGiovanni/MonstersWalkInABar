@@ -28,11 +28,13 @@ public class Glass : MonoBehaviour
     public void addAlcohol(Alcohol a)
     {
         m_alcohol = a.getType();
+        Debug.Log("Add alcohol " + m_alcohol);
     }
 
     public void addFruit(Fruit f)
     {
         m_fruit = f.getType();
+        Debug.Log("Add alcohol " + m_fruit);
     }
 
     public Cocktail.Glass getType()

@@ -182,12 +182,17 @@ public class GameManager : MonoBehaviour
                 break;
         }
         m_players.Add(newPlayer);
+        newPlayer.GetComponent<PlayerManager>().SetGameManager(GetComponent<GameManager>());
     }
 
     public void IncreaseMood(float _amount)
     {
         float oldValue = m_mood;
-        m_mood -= _amount;
+        m_mood += _amount;
+        if (m_mood > 1.0F)
+        {
+            m_mood = 1.0F;
+        }
         m_moodBar.GetComponent<RectTransform>().localScale = new Vector3(m_mood, 1.0F, 1.0F);
 
         if (oldValue > 0.1 && m_mood <= 0.1)
@@ -200,6 +205,10 @@ public class GameManager : MonoBehaviour
     {
         float oldValue = m_mood;
         m_mood -= _amount;
+        if (m_mood < 0.0F)
+        {
+            m_mood = 0.0F;
+        }
         m_moodBar.GetComponent<RectTransform>().localScale = new Vector3(m_mood, 1.0F, 1.0F);
 
         if (oldValue > 0.1 && m_mood <= 0.1)
