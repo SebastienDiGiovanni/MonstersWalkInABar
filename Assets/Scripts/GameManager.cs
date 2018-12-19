@@ -176,6 +176,11 @@ public class GameManager : MonoBehaviour
 
                 m_clientManager.DestroyEveryClient();
 
+                if (m_mood < 0.3F)
+                {
+                    loose = true;
+                }
+
                 if (loose)
                 {
                     transform.GetChild(4).gameObject.GetComponent<SpriteRenderer>().sprite = m_loose;
