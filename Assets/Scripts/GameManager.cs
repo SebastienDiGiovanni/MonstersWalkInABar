@@ -69,10 +69,9 @@ public class GameManager : MonoBehaviour
 
 
 
-        // TODO REMOVE
         SpawnPlayer(0, 1);
-        SpawnPlayer(1, 25);
-        SpawnPlayer(2, 26);
+        SpawnPlayer(1, 2);
+        SpawnPlayer(2, 3);
         SpawnPlayer(3, 4);
 
 

@@ -1,4 +1,4 @@
 ﻿public static class StaticData
 {
-    public static int m_playersCount;
+    public static int m_playersCount = 4;
 }
