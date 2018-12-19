@@ -21,10 +21,8 @@ public class PlayerManager : MonoBehaviour
 
     private GameObject m_client;
 
-    public GameManager m_gameManager;
-
-    private bool m_needToClearBubbleFeedback;
-    private float m_bubbleFeedbackStopTimer;
+    private GameManager m_gameManager;
+    private ClientManager m_clientManager;
 
     private bool m_nextToTrashcan;
 
@@ -39,8 +37,6 @@ public class PlayerManager : MonoBehaviour
             m_spriteRenderer = GetComponent<SpriteRenderer>();
         }
         m_currentObjectCarried = null;
-
-        m_needToClearBubbleFeedback = false;
 
         m_nextToTrashcan = false;
     }
@@ -141,10 +137,6 @@ public class PlayerManager : MonoBehaviour
                         Client client = m_client.GetComponent<Client>();
                         Cocktail wantedCocktail = client.GetWantedCocktail();
 
-                        Debug.Log(glass.m_glass + " : " + wantedCocktail.m_glass);
-                        Debug.Log(glass.m_fruit + " : " + wantedCocktail.m_fruit);
-                        Debug.Log(glass.m_alcohol + " : " + wantedCocktail.m_alcohol);
-
                         if (glass.m_glass == wantedCocktail.m_glass
                             && glass.m_fruit == wantedCocktail.m_fruit
                             && glass.m_alcohol == wantedCocktail.m_alcohol)
@@ -165,13 +157,6 @@ public class PlayerManager : MonoBehaviour
                 }
             }
 
-        }
-
-        if (m_needToClearBubbleFeedback && Time.time > m_bubbleFeedbackStopTimer)
-        {
-            m_client.transform.GetChild(0).GetChild(3).GetComponent<SpriteRenderer>().enabled = false;
-            m_client.transform.GetChild(0).GetChild(4).GetComponent<SpriteRenderer>().enabled = false;
-            m_needToClearBubbleFeedback = false;
         }
     }
 
@@ -224,27 +209,34 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    public void SetGameManager(GameManager _gameManager)
+    public void SetManagers(GameManager _gameManager, ClientManager _clientManager)
     {
         m_gameManager = _gameManager;
+        m_clientManager = _clientManager;
     }
 
     public void ClientHappy()
     {
         m_gameManager.IncreaseMood(0.1F);
-        m_client.transform.GetChild(0).GetChild(3).GetComponent<SpriteRenderer>().enabled = true;
-        m_needToClearBubbleFeedback = true;
-        m_bubbleFeedbackStopTimer = Time.time + 1.0F;
-        Debug.Log("Client happy");
+
+        Destroy(m_currentObjectCarried);
+
+        // can't interact with this client anymore
+        m_client.tag = "Untagged";
+        m_client.GetComponent<Client>().Quit(true);
+        m_client = null;
     }
 
     public void ClientNotHappy()
     {
         m_gameManager.DecreaseMood(0.1F);
-        m_client.transform.GetChild(0).GetChild(4).GetComponent<SpriteRenderer>().enabled = true;
-        m_needToClearBubbleFeedback = true;
-        m_bubbleFeedbackStopTimer = Time.time + 1.0F;
-        Debug.Log("Client not happy");
+
+        Destroy(m_currentObjectCarried);
+
+        // can't interact with this client anymore
+        m_client.tag = "Untagged";
+        m_client.GetComponent<Client>().Quit(false);
+        m_client = null;
     }
 
     void OnTriggerEnter2D(Collider2D other)

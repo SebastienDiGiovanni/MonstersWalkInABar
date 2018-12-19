@@ -169,4 +169,24 @@ public class ClientManager : MonoBehaviour
             }
         }
     }
+
+    public void Quit(int _clientIndex, GameObject _gameObject)
+    {
+        m_freeSpawningLocations.Add(_clientIndex);
+
+        for (int i = 0; i < m_clients.Count; ++i)
+        {
+            if (m_clients[i].getIndex() == _clientIndex)
+            {
+                m_clients.RemoveAt(i);
+            }
+        }
+
+        Destroy(_gameObject);
+
+        if (Time.time > m_spawningTime)
+        {
+            m_spawningTime += m_spawningDelay;
+        }
+    }
 }

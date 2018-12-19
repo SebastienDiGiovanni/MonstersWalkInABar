@@ -20,6 +20,18 @@ TagManager:
   - Pickable_Glass_Type3
   - Pickable_Glass_Type4
   - Client
+  - Fruit_Strawberry
+  - Fruit_Grapes
+  - Fruit_Banana
+  - Fruit_Orange
+  - Alcohol_Type1
+  - Alcohol_Type2
+  - Alcohol_Type3
+  - Alcohol_Type4
+  - Glass_Type1
+  - Glass_Type2
+  - Glass_Type3
+  - Glass_Type4
   layers:
   - Default
   - TransparentFX

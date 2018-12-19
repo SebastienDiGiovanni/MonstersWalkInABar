@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
 
     public float m_moodDecreaseAmount;
 
+    public ClientManager m_clientManager;
+
     private List<GameObject> m_players;
 
     private float m_gameTimer;
@@ -182,7 +184,7 @@ public class GameManager : MonoBehaviour
                 break;
         }
         m_players.Add(newPlayer);
-        newPlayer.GetComponent<PlayerManager>().SetGameManager(GetComponent<GameManager>());
+        newPlayer.GetComponent<PlayerManager>().SetManagers(GetComponent<GameManager>(), m_clientManager);
     }
 
     public void IncreaseMood(float _amount)
