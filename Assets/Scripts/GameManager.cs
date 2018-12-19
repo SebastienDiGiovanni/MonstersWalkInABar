@@ -149,12 +149,14 @@ public class GameManager : MonoBehaviour
 
             m_gameTimer += Time.deltaTime;
 
-            if (m_gameTimer > m_maxTime)
+            float playTime = m_maxTime - m_gameTimer;
+
+            if (playTime < 0.0F)
             {
-                m_gameTimer = m_maxTime;
+                playTime = 0.0F;
             }
 
-            int seconds = (int)m_gameTimer;
+            int seconds = (int)playTime;
             int minutes = seconds / 60;
             seconds = seconds % 60;
             m_timerText.text = minutes.ToString() + ":" + (seconds > 9 ? seconds.ToString() : "0" + seconds.ToString());
@@ -162,7 +164,7 @@ public class GameManager : MonoBehaviour
             m_mood = m_moodBar.GetComponent<RectTransform>().localScale.x;
 
             bool loose = m_mood < Mathf.Epsilon;
-            if (Mathf.Abs(m_gameTimer - m_maxTime) < Mathf.Epsilon // end of time
+            if (Mathf.Abs(playTime) < Mathf.Epsilon // end of time
                 || loose)
             {
                 m_gameOver = true;
