@@ -32,6 +32,9 @@ public class GameManager : MonoBehaviour
 
     private bool m_gameOver;
 
+    private AudioSource source;
+    public AudioClip audioWin, audioLoose;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -90,6 +93,8 @@ public class GameManager : MonoBehaviour
                 Debug.Log(joystickNames[i]);
             }
         }*/
+
+        source = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -149,10 +154,12 @@ public class GameManager : MonoBehaviour
                 m_gameOver = true;
                 if (loose)
                 {
+                    source.PlayOneShot(audioWin);
                     // loose
                 }
                 else
                 {
+                    source.PlayOneShot(audioLoose);
                     // win
                 }
             }

@@ -26,6 +26,12 @@ public class PlayerManager : MonoBehaviour
 
     private bool m_nextToTrashcan;
 
+    private AudioSource source;
+    public AudioClip audioGrab;
+    public AudioClip audioClientHappy, audioClientAngry;
+    public AudioClip audioTrash;
+    public AudioClip audioGlass;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,6 +45,8 @@ public class PlayerManager : MonoBehaviour
         m_currentObjectCarried = null;
 
         m_nextToTrashcan = false;
+
+        source = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -119,12 +127,16 @@ public class PlayerManager : MonoBehaviour
                     }
 
                     m_currentObjectCarried = null;
+
+                    source.PlayOneShot(audioGlass);
                 }
             }
             else if (m_nextToTrashcan && m_currentObjectCarried)
             {
                 Destroy(m_currentObjectCarried);
                 m_currentObjectCarried = null;
+
+                source.PlayOneShot(audioTrash);
             }
             else if (m_client && m_currentObjectCarried)
             {
@@ -207,6 +219,8 @@ public class PlayerManager : MonoBehaviour
         {
             m_currentObjectCarried.transform.localScale = new Vector3(.8F, .8F, 1.0F);
         }
+
+        source.PlayOneShot(audioGrab);
     }
 
     public void SetManagers(GameManager _gameManager, ClientManager _clientManager)
@@ -225,6 +239,8 @@ public class PlayerManager : MonoBehaviour
         m_client.tag = "Untagged";
         m_client.GetComponent<Client>().Quit(true);
         m_client = null;
+
+        source.PlayOneShot(audioClientHappy);
     }
 
     public void ClientNotHappy()
@@ -237,6 +253,8 @@ public class PlayerManager : MonoBehaviour
         m_client.tag = "Untagged";
         m_client.GetComponent<Client>().Quit(false);
         m_client = null;
+
+        source.PlayOneShot(audioClientAngry);
     }
 
     void OnTriggerEnter2D(Collider2D other)

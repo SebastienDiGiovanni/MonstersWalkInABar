@@ -63,6 +63,9 @@ public class ClientManager : MonoBehaviour
     private List<Client> m_clients;
     private float m_spawningTime;
 
+    private AudioSource source;
+    public AudioClip audioNewOrder;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -75,6 +78,8 @@ public class ClientManager : MonoBehaviour
         }
 
         m_spawningTime = Time.time + m_firstSpawningDelay;
+
+        source = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -166,6 +171,8 @@ public class ClientManager : MonoBehaviour
                 Client clientScript = newClientGameObject.GetComponent<Client>();
                 clientScript.Init(clientIndex, cocktail, this, m_mood);
                 m_clients.Add(clientScript);
+
+                source.PlayOneShot(audioNewOrder);
             }
         }
     }
