@@ -38,7 +38,6 @@ public class GameManager : MonoBehaviour
 
     public Sprite m_win;
     public Sprite m_loose;
-    public SpriteRenderer m_backgroundRenderer;
 
     private List<GameObject> m_players;
 
@@ -177,12 +176,12 @@ public class GameManager : MonoBehaviour
 
                 if (loose)
                 {
-                    m_backgroundRenderer.sprite = m_loose;
+                    transform.GetChild(4).gameObject.GetComponent<SpriteRenderer>().sprite = m_loose;
                     source.PlayOneShot(audioLoose);
                 }
                 else
                 {
-                    m_backgroundRenderer.sprite = m_win;
+                    transform.GetChild(4).gameObject.GetComponent<SpriteRenderer>().sprite = m_win;
                     source.PlayOneShot(audioWin);
                 }
             }

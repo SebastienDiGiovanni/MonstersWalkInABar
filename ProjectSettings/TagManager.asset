@@ -99,3 +99,6 @@ TagManager:
   - name: Trashcan
     uniqueID: 1320306983
     locked: 0
+  - name: WinLoose
+    uniqueID: 4248103521
+    locked: 0
