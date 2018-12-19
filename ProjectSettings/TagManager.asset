@@ -72,6 +72,9 @@ TagManager:
   - name: Bar
     uniqueID: 1684772125
     locked: 0
+  - name: Client
+    uniqueID: 1180752667
+    locked: 0
   - name: ClientBubble
     uniqueID: 2055833431
     locked: 0
