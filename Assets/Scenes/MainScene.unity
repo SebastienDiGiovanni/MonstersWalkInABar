@@ -1005,6 +1005,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4069965921390394423, guid: 9ee6b0d5ebc294443b064153093c5c11,
         type: 3}
+      propertyPath: m_clientsSprites.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4069965921390394423, guid: 9ee6b0d5ebc294443b064153093c5c11,
+        type: 3}
       propertyPath: m_mood
       value: 
       objectReference: {fileID: 1594524950}
@@ -1013,6 +1018,12 @@ PrefabInstance:
       propertyPath: m_gameManager
       value: 
       objectReference: {fileID: 4132137678643342122}
+    - target: {fileID: 4069965921390394423, guid: 9ee6b0d5ebc294443b064153093c5c11,
+        type: 3}
+      propertyPath: m_clientsSprites.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: b935b83e2edced64181d22a0fc334330,
+        type: 3}
     - target: {fileID: 4069965921390394422, guid: 9ee6b0d5ebc294443b064153093c5c11,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1294,6 +1305,54 @@ PrefabInstance:
       propertyPath: m_backgroundRenderer
       value: 
       objectReference: {fileID: 944292691}
+    - target: {fileID: 567797666477001259, guid: cf09ae971439a6547b194d20945828ed,
+        type: 3}
+      propertyPath: m_PinkPlayerFront
+      value: 
+      objectReference: {fileID: 21300000, guid: 197cdb92e8fe9424894ccf1815a73a3e,
+        type: 3}
+    - target: {fileID: 567797666477001259, guid: cf09ae971439a6547b194d20945828ed,
+        type: 3}
+      propertyPath: m_PinkPlayerBack
+      value: 
+      objectReference: {fileID: 21300000, guid: 01cc1555c80fec24a994354297d020cf,
+        type: 3}
+    - target: {fileID: 567797666477001259, guid: cf09ae971439a6547b194d20945828ed,
+        type: 3}
+      propertyPath: m_PinkPlayerRight
+      value: 
+      objectReference: {fileID: 21300000, guid: f5043b88a3fb30a47a0b58535a2d0b82,
+        type: 3}
+    - target: {fileID: 567797666477001259, guid: cf09ae971439a6547b194d20945828ed,
+        type: 3}
+      propertyPath: m_PinkPlayerLeft
+      value: 
+      objectReference: {fileID: 21300000, guid: 94160f325ec084e409c14b8d42c95d33,
+        type: 3}
+    - target: {fileID: 567797666477001259, guid: cf09ae971439a6547b194d20945828ed,
+        type: 3}
+      propertyPath: m_GreenPlayerFront
+      value: 
+      objectReference: {fileID: 21300000, guid: ae8e02ffd07c9ef4b9e082a17f03adb9,
+        type: 3}
+    - target: {fileID: 567797666477001259, guid: cf09ae971439a6547b194d20945828ed,
+        type: 3}
+      propertyPath: m_GreenPlayerBack
+      value: 
+      objectReference: {fileID: 21300000, guid: d80302fadc45caf4d884f54c23b4868c,
+        type: 3}
+    - target: {fileID: 567797666477001259, guid: cf09ae971439a6547b194d20945828ed,
+        type: 3}
+      propertyPath: m_GreenPlayerLeft
+      value: 
+      objectReference: {fileID: 21300000, guid: 889085a977ff6034cb1957a8d24e5ada,
+        type: 3}
+    - target: {fileID: 567797666477001259, guid: cf09ae971439a6547b194d20945828ed,
+        type: 3}
+      propertyPath: m_GreenPlayerRight
+      value: 
+      objectReference: {fileID: 21300000, guid: 268ab596f34f2ec4587e8c97f847cea5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cf09ae971439a6547b194d20945828ed, type: 3}
 --- !u!114 &4132137678643342122 stripped

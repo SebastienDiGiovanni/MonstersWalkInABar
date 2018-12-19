@@ -22,6 +22,16 @@ public class GameManager : MonoBehaviour
     public Sprite m_BluePlayerRight;
     public Sprite m_BluePlayerLeft;
 
+    public Sprite m_PinkPlayerFront;
+    public Sprite m_PinkPlayerBack;
+    public Sprite m_PinkPlayerRight;
+    public Sprite m_PinkPlayerLeft;
+
+    public Sprite m_GreenPlayerFront;
+    public Sprite m_GreenPlayerBack;
+    public Sprite m_GreenPlayerRight;
+    public Sprite m_GreenPlayerLeft;
+
     public float m_moodDecreaseAmount;
 
     public ClientManager m_clientManager;
@@ -201,11 +211,11 @@ public class GameManager : MonoBehaviour
                 break;
 
             case 2:
-                newPlayer.GetComponent<PlayerManager>().SetSprites(m_YellowPlayerFront, m_YellowPlayerBack, m_YellowPlayerLeft, m_YellowPlayerRight);
+                newPlayer.GetComponent<PlayerManager>().SetSprites(m_PinkPlayerFront, m_PinkPlayerBack, m_PinkPlayerLeft, m_PinkPlayerRight);
                 break;
 
             case 3:
-                newPlayer.GetComponent<PlayerManager>().SetSprites(m_YellowPlayerFront, m_YellowPlayerBack, m_YellowPlayerLeft, m_YellowPlayerRight);
+                newPlayer.GetComponent<PlayerManager>().SetSprites(m_GreenPlayerFront, m_GreenPlayerBack, m_GreenPlayerLeft, m_GreenPlayerRight);
                 break;
         }
         m_players.Add(newPlayer);
