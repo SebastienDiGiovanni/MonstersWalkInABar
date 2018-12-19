@@ -94,30 +94,7 @@ public class PlayerManager : MonoBehaviour
             {
                 if (!m_currentObjectCarried) // pick up the object only if we are not carrying anything
                 {
-                    // m_currentlyCollidingWith contains whatever we want to pick right now
-                    m_currentObjectCarried = GameObject.Instantiate(m_currentlyCollidingWith.gameObject);
-
-                    Glass g = m_currentObjectCarried.GetComponent<Glass>();
-                    if (g)
-                    {
-                        g.setSelected(true);
-                    }
-                    Alcohol a = m_currentObjectCarried.GetComponent<Alcohol>();
-                    if (a)
-                    {
-                        a.setSelected(true);
-                    }
-                    Fruit f = m_currentObjectCarried.GetComponent<Fruit>();
-                    if (f)
-                    {
-                        f.setSelected(true);
-                    }
-
-                    // disable the collider on the picked object and move it over the head.
-                    m_currentObjectCarried.GetComponent<BoxCollider2D>().enabled = false;
-                    m_currentObjectCarried.transform.SetParent(gameObject.transform);
-                    m_currentObjectCarried.transform.localPosition = new Vector3(0, 2, 0);
-                    m_currentObjectCarried.GetComponent<SpriteRenderer>().sortingLayerName = "BetweenBarAndTrashcan";
+                    CarrySomething();
                 }
                 else if ((m_currentObjectCarried.tag.Contains("Fruit") || m_currentObjectCarried.tag.Contains("Alcohol"))
                     && m_currentlyCollidingWith.gameObject.tag.Contains("Glass"))
@@ -195,6 +172,55 @@ public class PlayerManager : MonoBehaviour
             m_client.transform.GetChild(0).GetChild(3).GetComponent<SpriteRenderer>().enabled = false;
             m_client.transform.GetChild(0).GetChild(4).GetComponent<SpriteRenderer>().enabled = false;
             m_needToClearBubbleFeedback = false;
+        }
+    }
+
+    public void CarrySomething()
+    {
+        // m_currentlyCollidingWith contains whatever we want to pick right now
+        m_currentObjectCarried = GameObject.Instantiate(m_currentlyCollidingWith.gameObject);
+
+        // if the carry a glass, empty the glass that stay on the bar
+        Glass g = m_currentObjectCarried.GetComponent<Glass>();
+        if (g)
+        {
+            for (int i = 0; i < m_currentlyCollidingWith.gameObject.transform.childCount; ++i)
+            {
+                Destroy(m_currentlyCollidingWith.gameObject.transform.GetChild(i).gameObject);
+            }
+        }
+
+        // a carried object is not a pickable anymore
+        string pickableTag = m_currentObjectCarried.tag;
+        string newTag = pickableTag.Substring(9);
+        m_currentObjectCarried.tag = newTag;
+
+        // disable the collider on the picked object and move it over the head.
+        m_currentObjectCarried.GetComponent<BoxCollider2D>().enabled = false;
+
+        m_currentObjectCarried.transform.SetParent(gameObject.transform);
+        m_currentObjectCarried.transform.localPosition = new Vector3(0, 2, 0);
+        m_currentObjectCarried.GetComponent<SpriteRenderer>().sortingLayerName = "BetweenPlayerAndTrashcan";
+
+        // glass content sorting layer
+        if (g)
+        {
+            for (int i = 0; i < m_currentObjectCarried.transform.childCount; ++i)
+            {
+                m_currentObjectCarried.transform.GetChild(i).gameObject.GetComponent<SpriteRenderer>().sortingLayerName = "BetweenPlayerAndTrashcan";
+            }
+        }
+
+        // update the scale
+        Fruit f = m_currentObjectCarried.GetComponent<Fruit>();
+        if (f)
+        {
+            m_currentObjectCarried.transform.localScale = new Vector3(1.2F, 1.2F, 1.0F);
+        }
+
+        if (g)
+        {
+            m_currentObjectCarried.transform.localScale = new Vector3(.8F, .8F, 1.0F);
         }
     }
 
