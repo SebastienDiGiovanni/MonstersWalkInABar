@@ -1,0 +1,8 @@
+In order of priority:
+- Generate orders randomly for clients + Add order popups over client's heads
+- Increase the size of colliders for the clients to make it possible to drop the glass at the bar
+- Drop the glass at the bar and trigger the cocktail evaluation
+- Add client reactions on good or bad cocktails
+- Fix dropping into the trashcan (probably because of the collider size)
+- Fix sprite render layers for the glass after it is picked up
+- Add the popup over the player's head that will hold the thing being carried
