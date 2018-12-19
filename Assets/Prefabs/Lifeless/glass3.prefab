@@ -96,7 +96,7 @@ MonoBehaviour:
   m_glass: 2
   m_alcohol: 0
   m_fruit: 0
-  selectedModeSprite: {fileID: 21300000, guid: 927c2c6adb686f84c9fa62d37529ef1d, type: 3}
+  selectedModeSprite: {fileID: 21300000, guid: b56c733fc82a0204a9f3c423f2ff9236, type: 3}
   notSelectedModeSprite: {fileID: 21300000, guid: 927c2c6adb686f84c9fa62d37529ef1d,
     type: 3}
 --- !u!61 &2337658633052848627

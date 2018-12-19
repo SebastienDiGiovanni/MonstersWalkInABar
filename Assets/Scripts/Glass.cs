@@ -25,15 +25,20 @@ public class Glass : MonoBehaviour
         }
     }
 
-    //public void addAlcohol(Alcohol a)
-    //{
+    public void addAlcohol(Alcohol a)
+    {
+        m_alcohol = a.getType();
+    }
 
-    //}
+    public void addFruit(Fruit f)
+    {
+        m_fruit = f.getType();
+    }
 
-    //public void addFruit(Fruit f)
-    //{
-
-    //}
+    public Cocktail.Glass getType()
+    {
+        return m_glass;
+    }
 
     // Start is called before the first frame update
     void Start()

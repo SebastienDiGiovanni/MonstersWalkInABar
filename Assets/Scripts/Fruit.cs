@@ -21,6 +21,11 @@ public class Fruit : MonoBehaviour
         
     }
 
+    public Cocktail.Fruit getType()
+    {
+        return m_fruit;
+    }
+
     public void setSelected(bool selected)
     {
         if (selected)

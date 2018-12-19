@@ -17,7 +17,8 @@ public class PlayerManager : MonoBehaviour
     private Collider2D m_currentlyCollidingWith;
     private GameObject m_currentObjectCarried;
 
-    private GameObject m_itemHolder;
+    private float m_pickupCooldownSeconds = 1.0f;
+    private float m_pickupTimer = 0.0f;
 
     private int m_playerIndex;
 
@@ -32,8 +33,6 @@ public class PlayerManager : MonoBehaviour
             m_spriteRenderer = GetComponent<SpriteRenderer>();
         }
         m_currentObjectCarried = null;
-
-        m_itemHolder = GameObject.FindGameObjectWithTag("ItemHolder");
     }
 
     // Update is called once per frame
@@ -79,8 +78,13 @@ public class PlayerManager : MonoBehaviour
             }
         }
 
-        if (Input.GetButton("Valid" + playerIndex) && m_currentlyCollidingWith)
+        m_pickupTimer += Time.deltaTime;
+
+        Debug.Log("m_currentlyCollidingWith: " + (m_currentlyCollidingWith ? m_currentlyCollidingWith.gameObject.name : "null"));
+
+        if (Input.GetButton("Valid" + playerIndex) && m_currentlyCollidingWith && (m_pickupTimer > m_pickupCooldownSeconds))
         {
+            Debug.Log("m_currentObjectCarried: " + (m_currentObjectCarried ? m_currentObjectCarried.name : "null"));
             if (!m_currentObjectCarried) // pick up the object only if we are not carrying anything
             {
                 // m_currentlyCollidingWith contains whatever we want to pick right now
@@ -105,8 +109,10 @@ public class PlayerManager : MonoBehaviour
                 // disable the collider on the picked object and move it over the head.
                 m_currentObjectCarried.GetComponent<BoxCollider2D>().enabled = false;
                 m_currentObjectCarried.transform.SetParent(gameObject.transform);
-                m_currentObjectCarried.transform.position = m_itemHolder.transform.position;
+                m_currentObjectCarried.transform.localPosition = new Vector3(0, 2, 0);
                 m_currentObjectCarried.GetComponent<SpriteRenderer>().sortingLayerName = "BetweenBarAndTrashcan";
+
+                m_pickupTimer = 0.0f;
             }
             else
             {
@@ -118,14 +124,46 @@ public class PlayerManager : MonoBehaviour
                     // drop it into the glass if we are colliding with a glass
                     if (m_currentlyCollidingWith && m_currentlyCollidingWith.gameObject.tag.Contains("Glass"))
                     {
-                        Debug.Log("Dropping into the glass");
+                        Debug.Log("Dropping into the glass: " + m_currentObjectCarried.name);
                         Glass g = m_currentlyCollidingWith.GetComponent<Glass>();
+                        m_currentObjectCarried.transform.SetParent(m_currentlyCollidingWith.gameObject.transform);
+                        
+                        m_currentObjectCarried.GetComponent<SpriteRenderer>().sortingLayerName = "BetweenBarAndPlayer";
+                        m_currentObjectCarried.GetComponent<SpriteRenderer>().sortingOrder = 2;
+
+                        Alcohol a = m_currentObjectCarried.GetComponent<Alcohol>();
+                        if (a)
+                        {
+                            m_currentObjectCarried.transform.localPosition = new Vector3(0, 0.5f, 0);
+                            g.addAlcohol(a);
+                        }
+                        Fruit f = m_currentObjectCarried.GetComponent<Fruit>();
+                        if (f)
+                        {
+                            m_currentObjectCarried.transform.localPosition = Vector3.zero;
+                            g.addFruit(f);
+                        }
+
+                        m_currentObjectCarried = null;
+                        m_pickupTimer = 0.0f;
                     }
+                }
+
+                if (m_currentObjectCarried.tag.Contains("Glass"))
+                {
+                    // TODO:
+                        // Check if we're colliding with the Client
+                        // Then drop the glass on the 
+                        // The client will automatically evaluate the drink
+                        // Maybe launch the evaluation from here
                 }
 
                 if (m_currentlyCollidingWith && m_currentlyCollidingWith.gameObject.tag.Contains("Trash"))
                 {
-                    Debug.Log("Dropping into the trash");
+                    Debug.Log("Dropping into the trash: " + m_currentObjectCarried.name);
+                    Destroy(m_currentObjectCarried);
+                    m_currentObjectCarried = null;
+                    m_pickupTimer = 0.0f;
                 }
             }
         }
@@ -135,7 +173,7 @@ public class PlayerManager : MonoBehaviour
     {
         if (other.tag.Contains("Pickable") && !m_currentlyCollidingWith)
         {
-            Debug.Log("collided with " + other.tag + " " + other.gameObject.name);
+            //Debug.Log("collided with " + other.tag + " " + other.gameObject.name);
             m_currentlyCollidingWith = other;
             GameObject go = other.gameObject;
             Glass g = go.GetComponent<Glass>();
@@ -160,7 +198,7 @@ public class PlayerManager : MonoBehaviour
     {
         if (other.tag.Contains("Pickable") && !m_currentlyCollidingWith)
         {
-            Debug.Log("collided with " + other.tag + " " + other.gameObject.name);
+            //Debug.Log("collided with " + other.tag + " " + other.gameObject.name);
             m_currentlyCollidingWith = other;
             GameObject go = other.gameObject;
             Glass g = go.GetComponent<Glass>();
@@ -201,7 +239,7 @@ public class PlayerManager : MonoBehaviour
         }
         if (m_currentlyCollidingWith == other)
         {
-            Debug.Log("collided with " + other.tag + " " + other.gameObject.name);
+            //Debug.Log("collided with " + other.tag + " " + other.gameObject.name);
             m_currentlyCollidingWith = null;
         }
     }
@@ -223,8 +261,6 @@ public class PlayerManager : MonoBehaviour
     public void SetPlayerIndex(int _index)
     {
         m_playerIndex = _index;
-        string test = "Horizontal" + m_playerIndex.ToString();
-        Debug.Log("I'll be reading " + test);
     }
 
     public GameObject getCurrentObjectCarried()

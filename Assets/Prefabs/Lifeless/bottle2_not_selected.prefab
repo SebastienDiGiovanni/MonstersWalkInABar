@@ -93,7 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3b09e6ee3bc35e428759056d8882155, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedModeSprite: {fileID: 21300000, guid: 66e2f56cd81c04843bf9f18704ff991c, type: 3}
+  selectedModeSprite: {fileID: 21300000, guid: fa26019fd6517df40a531e03c6991eea, type: 3}
   notSelectedModeSprite: {fileID: 21300000, guid: 66e2f56cd81c04843bf9f18704ff991c,
     type: 3}
   m_alcohol: 2
@@ -114,12 +114,12 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.63, y: 0.73}
+    oldSize: {x: 0.46, y: 0.4}
     newSize: {x: 0.63, y: 0.73}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.55, y: 0.94}
+  m_Size: {x: 2, y: 0.84}
   m_EdgeRadius: 0

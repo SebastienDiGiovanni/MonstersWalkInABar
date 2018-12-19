@@ -20,6 +20,11 @@ public class Alcohol : MonoBehaviour
         }
     }
 
+    public Cocktail.Alcohol getType()
+    {
+        return m_alcohol;
+    }
+
     void Start()
     {
         

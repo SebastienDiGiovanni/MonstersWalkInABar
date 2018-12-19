@@ -45,51 +45,11 @@ public class GameManager : MonoBehaviour
             StaticData.m_playersCount = 4;
         }
 
-        // TODO REMOVE COMMENT
-        /*string[] joystickNames = Input.GetJoystickNames();
-        int joystickIndex = 1;
-        bool playerSpawned = false;
-
-        for (int playerIndex = 1; playerIndex <= StaticData.m_playersCount; ++playerIndex)
-        {
-            playerSpawned = false;
-            while (joystickIndex <= joystickNames.Length && !playerSpawned)
-            {
-                string joystickName = joystickNames[joystickIndex - 1];
-                if (joystickName.Length > 0)
-                {
-                    SpawnPlayer(playerIndex - 1, joystickIndex);
-                    playerSpawned = true;
-                }
-                ++joystickIndex;
-            }
-        }*/
-
-
-
-        // TODO REMOVE
-        SpawnPlayer(0, 1);
-        SpawnPlayer(1, 25);
-        SpawnPlayer(2, 26);
-        SpawnPlayer(3, 4);
-
-
-
-        /*Debug.Log("joysticks");
-        
-        for (int i = 0; i < joystickNames.Length; ++i)
-        { 
-            if (joystickNames[i].Length == 0)
-            {
-                Debug.Log("EMPTY");
-            }
-            else
-            {
-                Debug.Log(joystickNames[i]);
-            }
-        }*/
-
-
+        // player 1
+        SpawnPlayer(0, 1, m_YellowPlayerFront, m_YellowPlayerBack, m_YellowPlayerLeft, m_YellowPlayerRight);
+        SpawnPlayer(1, 2, m_BluePlayerFront, m_BluePlayerBack, m_BluePlayerLeft, m_BluePlayerRight);
+        SpawnPlayer(2, 3, m_YellowPlayerFront, m_YellowPlayerBack, m_YellowPlayerLeft, m_YellowPlayerRight);
+        SpawnPlayer(3, 4, m_YellowPlayerFront, m_YellowPlayerBack, m_YellowPlayerLeft, m_YellowPlayerRight);
     }
 
     // Update is called once per frame
@@ -159,31 +119,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void SpawnPlayer(int _spawningLocationIndex, int _joystickIndex)
+    public void SpawnPlayer(int _spawningLocationIndex, int _playerIndex, Sprite _front, Sprite _back, Sprite _left, Sprite _right)
     {
-        Debug.Log("Use joystick index: " + _joystickIndex);
-        GameObject newPlayer = Instantiate(m_playerPrefab);
-        newPlayer.transform.position = transform.GetChild(_spawningLocationIndex).position;
-        newPlayer.GetComponent<PlayerManager>().SetPlayerIndex(_joystickIndex);
-        switch (_spawningLocationIndex)
+        if (StaticData.m_playersCount >= _playerIndex)
         {
-            case 0:
-                newPlayer.GetComponent<PlayerManager>().SetSprites(m_YellowPlayerFront, m_YellowPlayerBack, m_YellowPlayerLeft, m_YellowPlayerRight);
-                break;
-
-            case 1:
-                newPlayer.GetComponent<PlayerManager>().SetSprites(m_BluePlayerFront, m_BluePlayerBack, m_BluePlayerLeft, m_BluePlayerRight);
-                break;
-
-            case 2:
-                newPlayer.GetComponent<PlayerManager>().SetSprites(m_YellowPlayerFront, m_YellowPlayerBack, m_YellowPlayerLeft, m_YellowPlayerRight);
-                break;
-
-            case 3:
-                newPlayer.GetComponent<PlayerManager>().SetSprites(m_YellowPlayerFront, m_YellowPlayerBack, m_YellowPlayerLeft, m_YellowPlayerRight);
-                break;
+            GameObject newPlayer = Instantiate(m_playerPrefab);
+            newPlayer.transform.position = transform.GetChild(_spawningLocationIndex).position;
+            newPlayer.GetComponent<PlayerManager>().SetPlayerIndex(_playerIndex);
+            newPlayer.GetComponent<PlayerManager>().SetSprites(_front, _back, _left, _right);
+            m_players.Add(newPlayer);
         }
-        m_players.Add(newPlayer);
     }
 
     public void IncreaseMood(float _amount)
