@@ -240,9 +240,9 @@ public class GameManager : MonoBehaviour
         }
         m_moodBar.GetComponent<RectTransform>().localScale = new Vector3(m_mood, 1.0F, 1.0F);
 
-        if (oldValue > 0.1 && m_mood <= 0.1)
+        if (oldValue < 0.3 && m_mood >= 0.3)
         {
-            m_moodBar.GetComponent<Image>().color = new Color(1.0F, 0.0F, 0.0F);
+            m_moodBar.GetComponent<Image>().color = new Color(0.0F, 1.0F, 0.0F);
         }
     }
 
@@ -256,7 +256,7 @@ public class GameManager : MonoBehaviour
         }
         m_moodBar.GetComponent<RectTransform>().localScale = new Vector3(m_mood, 1.0F, 1.0F);
 
-        if (oldValue > 0.1 && m_mood <= 0.1)
+        if (oldValue >= 0.3 && m_mood < 0.3)
         {
             m_moodBar.GetComponent<Image>().color = new Color(1.0F, 0.0F, 0.0F);
         }
